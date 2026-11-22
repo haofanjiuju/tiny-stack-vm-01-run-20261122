@@ -15,8 +15,7 @@ for (let i = 0x10; i <= 0x22; i++) V[i] = 1;
 V[0x1f] = 0;
 V[1] = 2;
 V[2] = 5;
-for (let i = 0x30; i <= 0x34; i++) V[i] = 1;
-for (let i = 0x30; i <= 0x33; i++) V[i] = 3;
+for (let i = 0x30; i <= 0x34; i++) V[i] = i < 0x34 ? 3 : 1;
 V[0x40] = 1;
 V[0x41] = 1;
 for (let i = 0x50; i <= 0x53; i++) V[i] = 1;
@@ -128,7 +127,7 @@ function run(p, inp) {
       }
       case 0x50: {
         if (sp < 1) return done(2);
-        const s = String(D[sp - 1]);
+        const s = D[sp - 1] + '';
         if (ol + s.length > 65536) return done(11);
         sp--;
         for (let i = 0; i < s.length; i++) out[ol++] = s.charCodeAt(i);
